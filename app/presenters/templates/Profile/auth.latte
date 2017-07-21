@@ -1,0 +1,32 @@
+{block content}
+    <div class="panel-group" id="auth-accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#auth-accordion" href="#auth-collapse-login">
+                        Přihlášení
+                    </a>
+                </h4>
+            </div>
+            <div id="auth-collapse-login" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    {control formLogin}
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#auth-accordion" href="#auth-collapse-registration">
+                        Registrace
+                    </a>
+                </h4>
+            </div>
+            <div id="auth-collapse-registration" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {control formRegistration}
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

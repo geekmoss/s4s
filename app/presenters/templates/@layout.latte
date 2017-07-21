@@ -1,0 +1,101 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>{ifset title}{include title|striptags} | {/ifset}S4S</title>
+
+	<link rel="stylesheet" href="{$basePath}/css/bootstrap/bootstrap.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<meta name="viewport" content="width=device-width">
+	{block head}{/block}
+
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap/datepicker/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="{$basePath}/css/fileinput.css">
+        
+    <link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+    <link rel="stylesheet" href="{$basePath}/css/jquery-ui.structure.css">
+    <link rel="stylesheet" href="{$basePath}/css/jquery-ui.theme.css">
+
+    <link rel="stylesheet" href="{$basePath}/css/morris.css">
+
+    <link rel="stylesheet" href="{$basePath}/css/style.css">
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-staic-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" n:href="Homepage:">S4S</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {foreach $nav as $btn}
+                    {if $btn->type == 'dropdown'}
+                        {var $clss = ($presenter->getName().':') == $btn->presenter ? 'active' : ''}
+                        <li class="dropdown {$clss}">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$btn->label} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {foreach $btn->items as $item}
+                                    {if $item->type == 'separator'}
+                                        <li role="separator" class="divider"></li>
+                                    {else}
+                                        <li><a n:href="$item->presenter.$item->action">{$item->label}</a></li>
+                                    {/if}
+                                {/foreach}
+                            </ul>
+                        </li>
+                    {else}
+                        <li n:class="($presenter->getName().':') == $btn->presenter ? active"><a n:href="$btn->presenter.$btn->action">{$btn->label}</a></li>
+                    {/if}
+                {/foreach}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+    <div class="container">
+
+        <div n:foreach="$flashes as $flash" n:class="alert, $flash->type">{$flash->message}</div>
+
+        {include content}
+
+
+    </div>
+    <script src="{$basePath}/js/jquery-3.1.0.min.js"></script>
+    <script src="{$basePath}/js/jquery-ui.js"></script>
+
+    <script src="{$basePath}/js/bootstrap/bootstrap.js"></script>
+
+    <script src="{$basePath}/js/netteForms.min.js"></script>
+    <script src="{$basePath}/js/nette.ajax.js"></script>
+
+    <script src="{$basePath}/js/bootstrap/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="{$basePath}/js/bootstrap/datepicker/locales/bootstrap-datepicker.cs.min.js"></script>
+
+    <script src="{$basePath}/js/bootstrap/upload/fileinput.js"></script>
+    <script src="{$basePath}/js/bootstrap/upload/cz.js"></script>
+
+    <script src="{$basePath}/js/clipboard.min.js"></script>
+    <script src="{$basePath}/js/raphael.min.js"></script>
+    <script src="{$basePath}/js/morris.min.js"></script>
+
+    <script src="{$basePath}/js/main.js"></script>
+    <script src="{$basePath}/js/ajax.js"></script>
+    {* odkomentovat při užívání Google Ads a jiné *}
+    {*<script src="//d2z9iq901qkqk8.cloudfront.net/cz.js" async></script>*}
+</body>
+</html>

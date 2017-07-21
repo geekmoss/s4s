@@ -1,0 +1,115 @@
+{block content}
+    <h3 n:block="title">{$material->name}</h3>
+    <div class="row">
+        {* Copy URL *}
+        {* Stažení - URL + Download*}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Stažení práce</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <input id="download_url" type="text" class="form-control" readonly value="{$url}{link Materials:download $material->hash}">
+                        <span class="input-group-btn">
+                            <button id="copy_button" class="btn btn-default" data-clipboard-target="#download_url" data-toggle="tooltip" data-placement="top" title="Kopírovat">
+                                <span class="glyphicon glyphicon-copy"></span>
+                            </button>
+                            <a n:href="Materials:download $material->hash" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Stáhnout">
+                                <span class="glyphicon glyphicon-save-file"></span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {* Citace *}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Citace</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <textarea id="citace" readonly class="form-control custom-control" rows="3" style="resize:none">{$material->name} [online]. {$material->ts} [cit. {date('j. n. Y')}]. Dostupné z: {$url}{link Materials:overview $material->hash}</textarea>
+                        <span id="copy_button" class="input-group-addon btn" data-clipboard-target="#citace" data-toggle="tooltip" data-placement="top" title="Kopírovat">
+                            <span class="glyphicon glyphicon-copy"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {* ROW *}
+        {* Popis práce *}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Popis práce</h3>
+                </div>
+                <div class="panel-body">
+                    {$material->description}
+                </div>
+            </div>
+        </div>
+        {* Licence souboru *}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Licence</h3>
+                </div>
+                <div class="panel-body">
+                    {$material->license}
+                </div>
+            </div>
+        </div>
+        {* Autor *}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Autor</h3>
+                </div>
+                <div class="panel-body">
+                    {$material->username}
+                </div>
+            </div>
+        </div>
+        {* Karma a hodnocení *}
+            {snippet overview-karma}
+            <div n:if="$isLoggedIn" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Karma</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                {$material->karma}
+                            </div>
+                            {if $voted !== false}
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    Již ohodnoceno
+                                </div>
+                            {elseif $user->getId() == $material->aid}
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    Nemůžete hodnotit vlastní práci
+                                </div>
+                            {else}
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <button class="btn btn-danger" id="karma-vote-down" data-url="{$url}" data-vote="down" data-hash="{$material->hash}">
+                                        <span class="glyphicon glyphicon-thumbs-down"></span>
+                                    </button>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <button class="btn btn-success" id="karma-vote-up" data-url="{$url}" data-vote="up" data-hash="{$material->hash}">
+                                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                                    </button>
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {/snippet}
+        {* IDEA: Možná přidat náhled? *}
+    </div>
+{/block}

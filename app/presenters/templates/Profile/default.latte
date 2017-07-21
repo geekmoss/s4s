@@ -1,0 +1,55 @@
+{block content}
+    <h1 n:block="title" class="pull-left">{$profile->username}</h1>
+    <a n:if="$editLink" n:href="Profile:edit"><span class="lead glyphicon glyphicon-pencil pull-right"></span></a>
+    <table class="table">
+        <tr>
+            <th><span class="glyphicon {$VI->email}"></span> E-Mail</th>
+            <td>
+                {if $ats->email}
+                    {$profile->email}
+                {else}
+                    E-Mail je skrytý
+                {/if}
+            </td>
+        </tr>
+        <tr>
+            <th><span class="glyphicon {$VI->fullname}"></span> Jméno</th>
+            <td>
+                {if $ats->fullname}
+                    {$profile->fullname}
+                {else}
+                    Jméno je skryté
+                {/if}
+            </td>
+        </tr>
+        <tr>
+            <th><span class="glyphicon glyphicon-globe"></span> Karma</th>
+            <td>
+                {$profile->karma}
+            </td>
+        </tr>
+        <tr>
+            <th><span class="glyphicon {$VI->web}"></span> Web</th>
+            <td>
+                {if $ats->web}
+                    <a href="{$profile->web}">{$profile->web}</a>
+                {else}
+                    Webové stránky josu skryté
+                {/if}
+            </td>
+        </tr>
+        <tr>
+            <th><span class="glyphicon {$VI->bio}"></span> Bio</span></th>
+            <td>
+                {if $ats->bio}
+                    {$profile->bio}
+                {else}
+                    Popis o uživateli je sktrytý
+                {/if}
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <a n:href="Materials:default, search => $profile->username" class="btn btn-default">Vyhledat práce přidané uživatelem</a>
+{/block}
+

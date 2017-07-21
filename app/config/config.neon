@@ -1,0 +1,39 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# http://nette.org/security-warning
+#
+parameters:
+
+php:
+	date.timezone: Europe/Prague
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*
+
+
+session:
+    autoStart: yes
+    expiration: 14 days
+
+database:
+	dsn: 'mysql:host=localhost;dbname=s4s'
+	user: root
+	password: 
+	options:
+		lazy: yes
+
+services:
+        authenticator: App\Models\Autentifikator
+        router: App\RouterFactory::createRouter
+
+        - App\Forms\SignFormFactory
+        - App\Forms\ProfileFormFactory
+        - App\Forms\MaterialsFormFactory
+
+        - App\Models\Profile
+        - App\Models\Materials
+        - App\Models\Visibility
+        - App\Models\Karma

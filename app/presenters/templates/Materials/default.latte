@@ -1,0 +1,77 @@
+{block content}
+    {* Listování kategoriemi *}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="nav nav-pills">
+                <li n:class="$active_category === null ? active"><button class="btn btn-default" id="materials_categoryALL" data-cat="ALL" data-url="{$url}/materials/" >Vše</button></li>
+                <li n:foreach="$category as $c" n:class="$active_category === $c->abbreviation ? active">
+                    <button class="btn btn-default" id="materials_category{$c->abbreviation}" data-cat="{$c->abbreviation}" data-url="{$url}/materials/default/">
+                        {$c->name}
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-inline">
+            {* IDEA: Možná časem přidat seřazení dle... *}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <input id="search_input" placeholder="Vyhledej..." value="{$search_val}" data-url="{$url}{link Materials:default $active_category == null ? '' : $active_category}" type="text" class="form-control" aria-label="...">
+                <div class="input-group-btn">
+                    <button id="search_clear" class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    {* Jednotlivé práce *}
+    {snippet materials_list}
+        <div class="row">
+            <div n:foreach="$materials as $m" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{$m->name}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {$m->description}
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Autor</th>
+                            <td><a n:href="Profile:default $m->aid">{$m->username}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Kategorie</th>
+                            <td>{$m->category}</td>
+                        </tr>
+                        <tr>
+                            <th>Licence</th>
+                            <td>{$m->license}</td>
+                        </tr>
+                        <tr n:if="$user->isLoggedIn()">
+                            <th>Karma</th>
+                            <td>{$m->karma}</td>
+                        </tr>
+                        <tr>
+                            <th>Poslední změna</th>
+                            <td>{$m->ts}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a n:href="Materials:overview $m->hash" class="btn btn-default">Přehled</a>
+                                <a n:href="Materials:download $m->hash" class="btn btn-default">Stáhnout</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p n:if="$materials === []" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Doposud nebyli zveřejněny žádné materiály.</p>
+        </div>
+    {/snippet}
+{/block}

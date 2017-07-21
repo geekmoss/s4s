@@ -1,0 +1,7 @@
+/.idea/
+/temp/sessions/
+/temp/cache/
+/vendor/
+/app/config/config.local.neon
+/composer.lock
+/www/files/uploaded/

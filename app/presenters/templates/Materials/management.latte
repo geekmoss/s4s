@@ -1,0 +1,52 @@
+{block content}
+    {*TODO: Překopat tabulku na něco responzivního*}
+    <h3 n:block="title">Správa uložených prací</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>Název</th>
+                <th>Licence</th>
+                <th>Kategorie</th>
+                <th>Karma</th>
+                <th>Poslední změna</th>
+                <th></th>
+            </tr>
+            <tr n:foreach="$materials as $m">
+                <td><span class="glyphicon {$vis_icons[$m->id]}"></span> {$m->name}</td>
+                <td>{$m->license}</td>
+                <td>{$m->category}</td>
+                <td>{$m->karma}</td>
+                <td>{$m->ts}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-default" n:href="Materials:overview $m->hash">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
+                        <a class="btn btn-default" n:href="Materials:edit $m->hash">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a class="btn btn-default" id="askToRemove{$m->id}" data-db-hash="{$m->hash}" data-url-remove="{link Materials:remove $m->hash}" data-toggle="modal" data-target="#confirmRemove">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Opravdu chcete smazat práci?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ne</button>
+                    <button id="yesRemove" type="button" class="btn btn-default" data-dismiss="modal">Ano</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
